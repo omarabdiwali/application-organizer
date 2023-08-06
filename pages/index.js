@@ -28,17 +28,17 @@ export default function Home() {
     let appValue = -1;
     let app1Value = -1;
 
-    if (appStatus.indexOf("Rejected") > -1) {
+    if (appStatus.includes("Rejected")) {
       appValue = 0;
-    } if (app1Status.indexOf("Rejected") > -1) {
+    } if (app1Status.includes("Rejected")) {
       app1Value = 0;
     }
 
     while (appValue == -1 || app1Value == -1) {
       if (appValue == -1) {
-        appValue = appStatus.indexOf(statuses[index]) > -1 ? index : -1;
+        appValue = appStatus.includes(statuses[index]) ? index : -1;
       } if (app1Value == -1) {
-        app1Value = app1Status.indexOf(statuses[index]) > -1 ? index : -1;
+        app1Value = app1Status.includes(statuses[index]) ? index : -1;
       }
 
       index -= 1;
@@ -56,7 +56,7 @@ export default function Home() {
   const getCount = (apps) => {
     let a = 0;
     let o = 0;
-    let i = 0;
+    let int = 0;
     let off = 0;
     let r = 0;
 
@@ -64,22 +64,22 @@ export default function Home() {
       const app = apps[i];
       let status = app.status;
 
-      if (status.indexOf("Applied") > -1) {
+      if (status.includes("Applied")) {
         a += 1;
-      } if (status.indexOf("Online Assessment") > -1) {
+      } if (status.includes("Online Assessment")) {
         o += 1;
-      } if (status.indexOf("Interviews") > -1) {
-        i += 1;
-      } if (status.indexOf("Offer") > -1) {
+      } if (status.includes("Interviews")) {
+        int += 1;
+      } if (status.includes("Offer")) {
         off += 1;
-      } if (status.indexOf("Rejected") > -1) {
+      } if (status.includes("Rejected")) {
         r += 1;
       }
     }
 
     setApplied(a);
     setOa(o);
-    setInterviews(i);
+    setInterviews(int);
     setOffers(off);
     setRejections(r);
   }
@@ -206,11 +206,11 @@ export default function Home() {
                     <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{title}</td>
                     <td className="border-b text-sm border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{date}</td>
                     <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400"><a className="hover:underline" target="__blank" href={url}>{url}</a></td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.indexOf("Applied") > -1 ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.indexOf("Online Assessment") > -1 ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.indexOf("Interviews") > -1 ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.indexOf("Rejected") > -1 ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className={`border-b border-slate-300 text-slate-700 dark:text-slate-400 dark:border-slate-700 p-3 pr-8`}>{status.indexOf("Offer") > -1 ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
+                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Applied") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
+                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Online Assessment") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
+                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Interviews") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
+                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Rejected") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
+                    <td className={`border-b border-slate-300 text-slate-700 dark:text-slate-400 dark:border-slate-700 p-3 pr-8`}>{status.includes("Offer") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
                   </tr>
                 )
               })}

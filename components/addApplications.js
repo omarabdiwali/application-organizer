@@ -84,11 +84,11 @@ export default function AddApplication({ func, button, className }) {
               </div>
               <div className="flex m-5 space-y-2 flex-col m-5">
                 <div></div>
-                <label><input checked={status.indexOf("Applied") > -1} onChange={e => changeStatus(e, "Applied")} className="mr-2" type="checkbox"></input>Applied</label>
-                <label><input checked={status.indexOf("Online") > -1} onChange={e => changeStatus(e, "Online Assessment")} className="mr-2" type="checkbox"></input>Online Assessment</label>
-                <label><input checked={status.indexOf("Inter") > -1} onChange={e => changeStatus(e, "Interviews")} className="mr-2" type="checkbox"></input>Interviews</label>
-                <label><input checked={status.indexOf("Offer") > -1} onChange={e => changeStatus(e, "Offer")} className="mr-2" type="checkbox"></input>Offer</label>
-                <label><input checked={status.indexOf("Reject") > -1} onChange={e => changeStatus(e, "Rejected")} className="mr-2" type="checkbox"></input>Rejected</label>
+                <label><input checked={status.includes("Applied")} onChange={e => changeStatus(e, "Applied")} className="mr-2" type="checkbox"></input>Applied</label>
+                <label><input checked={status.includes("Online")} onChange={e => changeStatus(e, "Online Assessment")} className="mr-2" type="checkbox"></input>Online Assessment</label>
+                <label><input checked={status.includes("Inter")} onChange={e => changeStatus(e, "Interviews")} className="mr-2" type="checkbox"></input>Interviews</label>
+                <label><input checked={status.includes("Offer")} onChange={e => changeStatus(e, "Offer")} className="mr-2" type="checkbox"></input>Offer</label>
+                <label><input checked={status.includes("Reject")} onChange={e => changeStatus(e, "Rejected")} className="mr-2" type="checkbox"></input>Rejected</label>
               </div>
               <div className="flex items-center justify-end p-6 space-x-2 rounded-b border-gray-600">
                 <button disabled={disabled} className="disabled:opacity-75 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-black text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800" onClick={addApplication}>Add</button>
