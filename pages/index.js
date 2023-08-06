@@ -84,6 +84,12 @@ export default function Home() {
     setRejections(r);
   }
 
+  const setSort = (apps) => {
+    apps = apps.sort(orderApplications);
+    getCount(apps);
+    setApplications([...apps]);
+  }
+
   const update = (title, url, status, prevUrl) => {
     let copyApplications = JSON.parse(JSON.stringify(applications));
     let index = copyApplications.findIndex(app => app.url == prevUrl);
@@ -91,26 +97,20 @@ export default function Home() {
     copyApplications[index].url = url;
     copyApplications[index].status = status;
 
-    copyApplications = copyApplications.sort(orderApplications);
-    getCount(copyApplications);
-    setApplications([...copyApplications]);
+    setSort(copyApplications);
   }
 
   const add = (application) => {
     let copyApplications = JSON.parse(JSON.stringify(applications));
     copyApplications.push(application);
-    copyApplications = copyApplications.sort(orderApplications);
-    getCount(copyApplications);
-    setApplications([...copyApplications]);
+    setSort(copyApplications);
   }
 
   const deleteApp = (url) => {
     let copyApplications = JSON.parse(JSON.stringify(applications));
     let index = copyApplications.findIndex(app => app.url == url);
     copyApplications.splice(index, 1);
-    copyApplications = copyApplications.sort(orderApplications);
-    getCount(copyApplications);
-    setApplications([...copyApplications]);
+    setSort(copyApplications);
   }
 
   const movePage = (dir) => {
@@ -127,9 +127,7 @@ export default function Home() {
     if (status === "loading" || status === "unauthenticated") return;
     
     fetch("/api/applications/get",).then(res => res.json()).then(data => {
-      let apps = data.applications.sort(orderApplications);
-      setApplications(apps);
-      getCount(apps);
+      setSort(data.applications);
       setLoaded(true);
     }).catch(err => console.error(err));
 
