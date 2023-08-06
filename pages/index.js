@@ -53,42 +53,6 @@ export default function Home() {
     }
   }
 
-  const update = (title, url, status, prevUrl) => {
-    let copyApplications = JSON.parse(JSON.stringify(applications));
-    let index = copyApplications.findIndex(app => app.url == prevUrl);
-    copyApplications[index].title = title;
-    copyApplications[index].url = url;
-    copyApplications[index].status = status;
-
-    copyApplications = copyApplications.sort(orderApplications);
-    setApplications(copyApplications);
-  }
-
-  const add = (application) => {
-    let copyApplications = JSON.parse(JSON.stringify(applications));
-    copyApplications.push(application);
-    copyApplications = copyApplications.sort(orderApplications);
-    setApplications(copyApplications);
-  }
-
-  const deleteApp = (url) => {
-    let copyApplications = JSON.parse(JSON.stringify(applications));
-    let index = copyApplications.findIndex(app => app.url == url);
-    copyApplications.splice(index, 1);
-    copyApplications = copyApplications.sort(orderApplications);
-    setApplications(copyApplications);
-  }
-
-  const movePage = (dir) => {
-    if (dir == "next") {
-      setPrevPage(nextPage);
-      setNextPage(nextPage + 10);
-    } else {
-      setNextPage(prevPage);
-      setPrevPage(prevPage - 10);
-    }
-  }
-
   const getCount = (apps) => {
     let a = 0;
     let o = 0;
@@ -118,6 +82,45 @@ export default function Home() {
     setInterviews(i);
     setOffers(off);
     setRejections(r);
+  }
+
+  const update = (title, url, status, prevUrl) => {
+    let copyApplications = JSON.parse(JSON.stringify(applications));
+    let index = copyApplications.findIndex(app => app.url == prevUrl);
+    copyApplications[index].title = title;
+    copyApplications[index].url = url;
+    copyApplications[index].status = status;
+
+    copyApplications = copyApplications.sort(orderApplications);
+    getCount(copyApplications);
+    setApplications([...copyApplications]);
+  }
+
+  const add = (application) => {
+    let copyApplications = JSON.parse(JSON.stringify(applications));
+    copyApplications.push(application);
+    copyApplications = copyApplications.sort(orderApplications);
+    getCount(copyApplications);
+    setApplications([...copyApplications]);
+  }
+
+  const deleteApp = (url) => {
+    let copyApplications = JSON.parse(JSON.stringify(applications));
+    let index = copyApplications.findIndex(app => app.url == url);
+    copyApplications.splice(index, 1);
+    copyApplications = copyApplications.sort(orderApplications);
+    getCount(copyApplications);
+    setApplications([...copyApplications]);
+  }
+
+  const movePage = (dir) => {
+    if (dir == "next") {
+      setPrevPage(nextPage);
+      setNextPage(nextPage + 10);
+    } else {
+      setNextPage(prevPage);
+      setPrevPage(prevPage - 10);
+    }
   }
 
   useEffect(() => {
