@@ -8,7 +8,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
     <SnackbarProvider>
       <SessionProvider session={session}>
         <Head>
-          <title>Applications</title>
+          <title>Applications Organizer</title>
         </Head>
         <Component {...pageProps} />
       </SessionProvider>
