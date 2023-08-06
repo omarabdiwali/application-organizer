@@ -167,7 +167,7 @@ export default function Home() {
            <div className="flex m-7 mr-4 text-md justify-end space-x-3">
             <div className={`flex-1 m-auto`}><AddApplication className={"text-2xl rounded-3xl p-2 hover:bg-slate-300 hover:text-black"} func={add} button={<AiOutlinePlusCircle />} /></div>
             <button className="disabled:opacity-20 text-2xl enabled:hover:text-slate-500" onClick={() => movePage("prev")} disabled={prevPage == 0}><AiOutlineArrowLeft /></button>
-            <button className="disabled:opacity-20 text-2xl enabled:hover:text-slate-500" onClick={() => movePage("next")} disabled={nextPage > applications.length}><AiOutlineArrowRight /></button>
+            <button className="disabled:opacity-20 text-2xl enabled:hover:text-slate-500" onClick={() => movePage("next")} disabled={nextPage >= applications.length}><AiOutlineArrowRight /></button>
           </div>
 
           <table className="border-collapse table-auto w-full">
