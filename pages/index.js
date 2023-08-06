@@ -49,7 +49,7 @@ export default function Home() {
     } else if (app1Value > appValue) {
       return 1;
     } else {
-      return app.date > app1.date ? -1 : 1;
+      return new Date(app.date) > new Date(app1.date) ? -1 : 1;
     }
   }
 
@@ -126,17 +126,14 @@ export default function Home() {
   useEffect(() => {
     if (status === "loading" || status === "unauthenticated") return;
     
-    fetch("/api/applications/get", {
-      method: "POST",
-      body: JSON.stringify({ email: session.user.email })
-    }).then(res => res.json()).then(data => {
+    fetch("/api/applications/get",).then(res => res.json()).then(data => {
       let apps = data.applications.sort(orderApplications);
       setApplications(apps);
       getCount(apps);
       setLoaded(true);
     }).catch(err => console.error(err));
 
-  }, [status, session])
+  }, [status])
 
   if (status !== "unauthenticated" && !loaded) {
     return (
@@ -181,11 +178,11 @@ export default function Home() {
                 <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Title</th>
                 <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Date</th>
                 <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">URL</th>
-                <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Applied</th>
-                <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">OA</th>
-                <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Interviews</th>
-                <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Rejected</th>
-                <th className="border-b dark:border-slate-600 font-medium p-3 pr-8 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Offer</th>
+                <th className="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Applied</th>
+                <th className="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">OA</th>
+                <th className="border-b dark:border-slate-600 font-medium p-2 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Interviews</th>
+                <th className="border-b dark:border-slate-600 font-medium p-1 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Reject</th>
+                <th className="border-b dark:border-slate-600 font-medium p-3 pr-5 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Offer</th>
               </tr>
             </thead>
             <tbody className="bg-slate-200 dark:bg-slate-800">
@@ -210,7 +207,7 @@ export default function Home() {
                     <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Online Assessment") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
                     <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Interviews") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
                     <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Rejected") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className={`border-b border-slate-300 text-slate-700 dark:text-slate-400 dark:border-slate-700 p-3 pr-8`}>{status.includes("Offer") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
+                    <td className={`border-b border-slate-300 text-slate-700 p-3 dark:text-slate-400 dark:border-slate-700`}>{status.includes("Offer") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
                   </tr>
                 )
               })}
