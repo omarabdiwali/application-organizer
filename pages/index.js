@@ -96,7 +96,6 @@ export default function Home() {
     copyApplications[index].title = title;
     copyApplications[index].url = url;
     copyApplications[index].status = status;
-
     setSort(copyApplications);
   }
 
@@ -221,7 +220,7 @@ export default function Home() {
                 <td className="p-3 text-center text-slate-500 dark:text-slate-400">{oa}</td>
                 <td className="p-3 text-center text-slate-500 dark:text-slate-400">{interviews}</td>
                 <td className="p-3 text-center text-slate-500 dark:text-slate-400">{rejections}</td>
-                <td className={`text-slate-500 text-center dark:text-slate-400 p-3 pr-8`}>{offers}</td>
+                <td className={`text-slate-500 text-center dark:text-slate-400 p-3 pr-5`}>{offers}</td>
               </tr>
             </tfoot>
           </table>
