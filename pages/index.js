@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { AiOutlinePlusCircle, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineDelete, AiOutlineClose, AiOutlineCheck, AiOutlineEdit } from "react-icons/ai";
 
 export default function Home() {
-  const { data: session, status } = useSession();
+  const { data: _, status } = useSession();
   
   const [loaded, setLoaded] = useState(false);
   const [applications, setApplications] = useState([]);
@@ -95,7 +95,7 @@ export default function Home() {
   }
 
   const update = (title, url, status, prevUrl) => {
-    let copyApplications = JSON.parse(JSON.stringify(applications));
+    let copyApplications = JSON.parse(JSON.stringify(allApplications));
     let index = copyApplications.findIndex(app => app.url == prevUrl);
     copyApplications[index].title = title;
     copyApplications[index].url = url;
@@ -104,13 +104,13 @@ export default function Home() {
   }
 
   const add = (application) => {
-    let copyApplications = JSON.parse(JSON.stringify(applications));
+    let copyApplications = JSON.parse(JSON.stringify(allApplications));
     copyApplications.push(application);
     setSort(copyApplications);
   }
 
   const deleteApp = (url) => {
-    let copyApplications = JSON.parse(JSON.stringify(applications));
+    let copyApplications = JSON.parse(JSON.stringify(allApplications));
     let index = copyApplications.findIndex(app => app.url == url);
     copyApplications.splice(index, 1);
     setSort(copyApplications);
@@ -135,6 +135,7 @@ export default function Home() {
     let copyApplications = [...allApplications];
     copyApplications = copyApplications.filter(app => filterApplications(app, e.target.value.toLowerCase()));
     setApplications(copyApplications);
+    getCount(copyApplications);
   }
 
   useEffect(() => {
