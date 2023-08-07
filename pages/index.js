@@ -7,10 +7,13 @@ import { AiOutlinePlusCircle, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutline
 
 export default function Home() {
   const { data: session, status } = useSession();
+  
   const [loaded, setLoaded] = useState(false);
   const [applications, setApplications] = useState([]);
+  const [allApplications, setAllApplications] = useState([]);
   const [prevPage, setPrevPage] = useState(0);
   const [nextPage, setNextPage] = useState(10);
+  const [search, setSearch] = useState("");
 
   const [applied, setApplied] = useState(0);
   const [oa, setOa] = useState(0);
@@ -88,6 +91,7 @@ export default function Home() {
     apps = apps.sort(orderApplications);
     getCount(apps);
     setApplications([...apps]);
+    setAllApplications([...apps]);
   }
 
   const update = (title, url, status, prevUrl) => {
@@ -122,6 +126,17 @@ export default function Home() {
     }
   }
 
+  const filterApplications = (app, value) => {
+    return (app.title.toLowerCase().includes(value) || app.url.toLowerCase().includes(value))
+  }
+
+  const onChange = (e) => {
+    setSearch(e.target.value);
+    let copyApplications = [...allApplications];
+    copyApplications = copyApplications.filter(app => filterApplications(app, e.target.value.toLowerCase()));
+    setApplications(copyApplications);
+  }
+
   useEffect(() => {
     if (status === "loading" || status === "unauthenticated") return;
     
@@ -149,7 +164,7 @@ export default function Home() {
     return (
       <div className="flex h-screen">
         <div className="m-auto">
-          <div onClick={() => signIn('google')} className='mt-5 cursor-pointer bg-blue-300 hover:bg-blue-400 text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
+          <div onClick={() => signIn('google')} className='mt-5 cursor-pointer hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
             Sign In With Google
           </div>
         </div>
@@ -163,6 +178,7 @@ export default function Home() {
         <>
            <div className="flex m-7 mr-4 text-md justify-end space-x-3">
             <div className={`flex-1 m-auto`}><AddApplication className={"text-2xl rounded-3xl p-2 hover:bg-slate-300 hover:text-black"} func={add} button={<AiOutlinePlusCircle />} /></div>
+            <input onChange={onChange} className="focus:outline-none px-3 py-1 border-slate-700 bg-inherit rounded-2xl" type="text" value={search} placeholder="Search..."></input>
             <button className="disabled:opacity-20 text-2xl enabled:hover:text-slate-500" onClick={() => movePage("prev")} disabled={prevPage == 0}><AiOutlineArrowLeft /></button>
             <button className="disabled:opacity-20 text-2xl enabled:hover:text-slate-500" onClick={() => movePage("next")} disabled={nextPage >= applications.length}><AiOutlineArrowRight /></button>
           </div>
@@ -170,8 +186,8 @@ export default function Home() {
           <table className="border-collapse table-auto w-full">
             <thead>
               <tr>
-                <th className="border-b dark:border-slate-600 font-medium pl-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"></th>
-                <th className="border-b dark:border-slate-600 font-medium pr-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"></th>
+                <th className="border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"></th>
+                <th className="border-b dark:border-slate-600 font-medium pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"></th>
                 <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Title</th>
                 <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">Date</th>
                 <th className="border-b dark:border-slate-600 font-medium p-3 pt-0 pb-3 text-slate-800 dark:text-slate-200 text-left">URL</th>
@@ -191,10 +207,10 @@ export default function Home() {
 
                 return (
                   <tr key={i + prevPage}>
-                    <td className="border-b border-slate-300 dark:border-slate-700 pl-4 text-slate-500 dark:text-slate-400">
+                    <td className="border-b p-3 border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400">
                       <DeleteApplication func={deleteApp} button={<AiOutlineDelete />} url={url} />
                     </td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 pr-4 text-slate-500 dark:text-slate-400">
+                    <td className="border-b border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400">
                       <UpdateApplication func={update} ogTitle={title} ogUrl={url} ogStatus={status} button={<AiOutlineEdit />} />
                     </td>
                     <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{title}</td>
@@ -209,9 +225,9 @@ export default function Home() {
                 )
               })}
             </tbody>
-            <tfoot className="bg-slate-200 dark:bg-black">
+            <tfoot className="bg-inherit">
               <tr className="font-extrabold">
-                <td className="p-3 text-slate-500 dark:text-slate-400">TOTAL</td>
+                <td className="p-3 text-slate-500 dark:text-slate-400"></td>
                 <td className="p-3 text-slate-500 dark:text-slate-400"></td>
                 <td className="p-3 text-slate-500 dark:text-slate-400"></td>
                 <td className="p-3 text-slate-500 dark:text-slate-400"></td>
