@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
 
   if (!session) {
-    res.status(200).json({message: "Not logged in."});
+    res.redirect("/");
     return;
   }
 
@@ -20,9 +20,9 @@ export default async function handler(req, res) {
   let user = await Accounts.findOne(query);
 
   if (user) {
-    res.status(200).json({ applications: user.applications, message: "Logged in." });
+    res.status(200).json({ applications: user.applications });
   } else {
     await Accounts.create(data).catch(err => console.log(err));
-    res.status(200).json({ applications: [], message: "Logged in." });
+    res.status(200).json({ applications: [] });
   }
 }

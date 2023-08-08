@@ -1,11 +1,13 @@
 import AddApplication from "@/components/addApplications";
 import DeleteApplication from "@/components/deleteApplication";
 import UpdateApplication from "@/components/updateApplication";
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { AiOutlinePlusCircle, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineDelete, AiOutlineClose, AiOutlineCheck, AiOutlineEdit } from "react-icons/ai";
 
 export default function Home() {
+  const { data: _, status } = useSession();
+
   const [loaded, setLoaded] = useState(false);
   const [applications, setApplications] = useState([]);
   const [allApplications, setAllApplications] = useState([]);
@@ -13,7 +15,6 @@ export default function Home() {
   const [nextPage, setNextPage] = useState(10);
   const [search, setSearch] = useState("");
 
-  const [status, setStatus] = useState("loading");
   const [applied, setApplied] = useState(0);
   const [oa, setOa] = useState(0);
   const [interviews, setInterviews] = useState(0);
@@ -137,19 +138,15 @@ export default function Home() {
     getCount(copyApplications);
   }
 
-  useEffect(() => {    
+  useEffect(() => {
+    if (status === "loading" || status === "unauthenticated") return;
+
     fetch("/api/applications/get",).then(res => res.json()).then(data => {
-      if (data.message == "Not logged in.") {
-        setStatus("unauthenticated");
-        setLoaded(true);
-        return;
-      }
       setSort(data.applications);
-      setStatus("authenticated");
       setLoaded(true);
     }).catch(err => console.error(err));
 
-  }, [])
+  }, [status])
 
   if (status !== "unauthenticated" && !loaded) {
     return (
