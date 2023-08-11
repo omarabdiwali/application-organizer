@@ -101,12 +101,14 @@ export default function Home() {
     copyApplications[index].url = url;
     copyApplications[index].status = status;
     setSort(copyApplications);
+    getCertainApplications(copyApplications, search);
   }
 
   const add = (application) => {
     let copyApplications = JSON.parse(JSON.stringify(allApplications));
     copyApplications.push(application);
     setSort(copyApplications);
+    getCertainApplications(copyApplications, search);
   }
 
   const deleteApp = (url) => {
@@ -114,6 +116,7 @@ export default function Home() {
     let index = copyApplications.findIndex(app => app.url == url);
     copyApplications.splice(index, 1);
     setSort(copyApplications);
+    getCertainApplications(copyApplications, search);
   }
 
   const movePage = (dir) => {
@@ -130,12 +133,16 @@ export default function Home() {
     return (app.title.toLowerCase().includes(value) || app.url.toLowerCase().includes(value))
   }
 
-  const onChange = (e) => {
-    setSearch(e.target.value);
-    let copyApplications = [...allApplications];
-    copyApplications = copyApplications.filter(app => filterApplications(app, e.target.value.toLowerCase()));
+  const getCertainApplications = (apps, value) => {
+    let copyApplications = [...apps];
+    copyApplications = copyApplications.filter(app => filterApplications(app, value.toLowerCase()));
     setApplications(copyApplications);
     getCount(copyApplications);
+  }
+
+  const onChange = (e) => {
+    setSearch(e.target.value);
+    getCertainApplications(allApplications, e.target.value);
   }
 
   useEffect(() => {
