@@ -208,7 +208,12 @@ export default function Home() {
             </thead>
             <tbody className="bg-slate-200 dark:bg-slate-800">
               {applications.slice(prevPage, nextPage).map((application, i) => {
-                let date = new Date(application.date).toLocaleDateString();
+                
+                let date = new Date(application.date).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit"
+                });
                 let title = application.title;
                 let url = application.url;
                 let status = application.status;
