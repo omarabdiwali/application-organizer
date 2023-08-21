@@ -228,7 +228,7 @@ export default function Home() {
                     </td>
                     <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{title}</td>
                     <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{date}</td>
-                    <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400"><a className="hover:underline" target="__blank" href={url}>{url}</a></td>
+                    <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400"><a rel="noopener norefferrer" className="hover:underline" target="__blank" href={url}>{url}</a></td>
                     <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Applied") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
                     <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Online Assessment") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
                     <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Interviews") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
