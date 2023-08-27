@@ -8,6 +8,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
     <SnackbarProvider>
       <SessionProvider session={session}>
         <Head>
+          <meta name="google-site-verification" content="AFBrxKgnj1l1SuZP7euHyl2zmEnTh5kGcTZgsZZ7bMc" />
           <title>Applications Organizer</title>
         </Head>
         <Component {...pageProps} />
