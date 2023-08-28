@@ -57,7 +57,6 @@ export default function Home() {
   }
 
   const getCount = (apps) => {
-    let a = 0;
     let o = 0;
     let int = 0;
     let off = 0;
@@ -66,10 +65,7 @@ export default function Home() {
     for (let i = 0; i < apps.length; i++) {
       const app = apps[i];
       let status = app.status;
-
-      if (status.includes("Applied")) {
-        a += 1;
-      } if (status.includes("Online Assessment")) {
+      if (status.includes("Online Assessment")) {
         o += 1;
       } if (status.includes("Interviews")) {
         int += 1;
@@ -80,7 +76,7 @@ export default function Home() {
       }
     }
 
-    setApplied(a);
+    setApplied(apps.length);
     setOa(o);
     setInterviews(int);
     setOffers(off);
