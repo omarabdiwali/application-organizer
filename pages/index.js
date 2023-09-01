@@ -139,6 +139,8 @@ export default function Home() {
   const onChange = (e) => {
     setSearch(e.target.value);
     getCertainApplications(allApplications, e.target.value);
+    setPrevPage(0);
+    setNextPage(10);
   }
 
   useEffect(() => {
