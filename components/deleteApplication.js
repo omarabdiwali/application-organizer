@@ -13,7 +13,7 @@ export default function DeleteApplication({ func, className, button, url }) {
       body: JSON.stringify({ url: url })
     }).then(res => res.json()).then(data => {
       if (data.answer == "Reload") {
-        window.location.href = "/";
+        window.location.reload();
         return;
       }
       if (data.variant == "success") {
@@ -43,7 +43,7 @@ export default function DeleteApplication({ func, className, button, url }) {
               </div>
               <div className="flex justify-end p-6 space-x-2 rounded-b border-gray-600">
                 <button disabled={disabled} className="text-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-red-600 disabled:bg-red-700 enabled:hover:bg-red-700 focus:ring-red-800" onClick={deleteItem}>Delete</button>
-                <button className="focus:ring-4 focus:outline-none rounded-lg border text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 bg-gray-700 text-gray-300 border-gray-500 hover:text-white hover:bg-gray-600 focus:ring-gray-600" onClick={() => setOpen(false)}>Cancel</button>
+                <button disabled={disabled} className="focus:ring-4 focus:outline-none rounded-lg border text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 bg-gray-700 text-gray-300 border-gray-500 hover:text-white hover:bg-gray-600 focus:ring-gray-600" onClick={() => setOpen(false)}>Cancel</button>
               </div>
             </div>
           </div>
