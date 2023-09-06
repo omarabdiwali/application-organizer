@@ -182,7 +182,8 @@ export default function Home() {
     <>
       {!loaded ? "" :
         <>
-           <div className="flex m-7 mr-4 text-md justify-end space-x-3">
+          <div className="flex m-7 mr-4 text-md justify-end space-x-3">
+            <div className="m-auto text-sm opacity-70">{`${applications.length > 0 ? nextPage / 10 : 0} / ${Math.ceil(applications.length / 10)}`}</div>
             <div className={`flex-1 m-auto`}><AddApplication className={"text-2xl rounded-3xl p-2 hover:bg-slate-300 hover:text-black"} func={add} button={<AiOutlinePlusCircle />} /></div>
             <input onChange={onChange} className="focus:outline-none px-3 py-1 border-slate-700 bg-inherit rounded-2xl" type="text" value={search} placeholder="Search..."></input>
             <button className="disabled:opacity-20 text-2xl enabled:hover:text-slate-500" onClick={() => movePage("prev")} disabled={prevPage == 0}><AiOutlineArrowLeft /></button>
