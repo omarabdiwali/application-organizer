@@ -1,7 +1,7 @@
 import AddApplication from "@/components/addApplications";
 import DeleteApplication from "@/components/deleteApplication";
 import UpdateApplication from "@/components/updateApplication";
-import { signIn, useSession } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { AiOutlinePlusCircle, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineDelete, AiOutlineClose, AiOutlineCheck, AiOutlineEdit } from "react-icons/ai";
 
@@ -153,6 +153,28 @@ export default function Home() {
 
   }, [status])
 
+  const getButton = (value) => {
+    if (value === "signOut") {
+      return (
+        <div onClick={() => signOut('google')} className='mt-1 mr-1 cursor-pointer hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black text-black font-md py-2 px-4 border border-gray-400 rounded shadow'>
+          Sign Out
+        </div>
+      )
+    }
+    return (
+      <div onClick={() => signIn('google')} className='mt-5 cursor-pointer hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
+        Sign In With Google
+      </div>
+    )
+  }
+
+  const getIcon = (status, value) => {
+    return (
+      status.includes(value) ? <AiOutlineCheck className="m-auto" color="green" /> 
+      : <AiOutlineClose className="m-auto" color="red" />
+    )
+  }
+
   if (status !== "unauthenticated" && !loaded) {
     return (
       <div className="flex h-screen">
@@ -170,9 +192,7 @@ export default function Home() {
     return (
       <div className="flex h-screen">
         <div className="m-auto">
-          <div onClick={() => signIn('google')} className='mt-5 cursor-pointer hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
-            Sign In With Google
-          </div>
+          {getButton("signIn")}
         </div>
       </div>
     )
@@ -182,6 +202,12 @@ export default function Home() {
     <>
       {!loaded ? "" :
         <>
+          <div className="flex bg-inherit">
+            <div className="text-2xl m-1 font-mono">AppTrack</div>
+            <div className="ml-auto">
+              {getButton("signOut")}
+            </div>
+          </div>
           <div className="flex m-7 mr-4 text-md justify-end space-x-3">
             <div className="m-auto text-sm opacity-70">{`${applications.length > 0 ? nextPage / 10 : 0} / ${Math.ceil(applications.length / 10)}`}</div>
             <div className={`flex-1 m-auto`}><AddApplication className={"text-2xl rounded-3xl p-2 hover:bg-slate-300 hover:text-black"} func={add} button={<AiOutlinePlusCircle />} /></div>
@@ -228,11 +254,11 @@ export default function Home() {
                     <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{title}</td>
                     <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{date}</td>
                     <td className="border-b text-xs border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400"><a rel="noopener norefferrer" className="hover:underline" target="__blank" href={url}>{url}</a></td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Applied") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Online Assessment") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Interviews") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{status.includes("Rejected") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
-                    <td className={`border-b border-slate-300 text-slate-700 p-3 dark:text-slate-400 dark:border-slate-700`}>{status.includes("Offer") ? <AiOutlineCheck className="m-auto" color="green" /> : <AiOutlineClose className="m-auto" color="red" />}</td>
+                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{getIcon(status, "Applied")}</td>
+                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{getIcon(status, "Online Assessment")}</td>
+                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{getIcon(status, "Interviews")}</td>
+                    <td className="border-b border-slate-300 dark:border-slate-700 p-3 text-slate-700 dark:text-slate-400">{getIcon(status, "Rejected")}</td>
+                    <td className={`border-b border-slate-300 text-slate-700 p-3 dark:text-slate-400 dark:border-slate-700`}>{getIcon(status, "Offer")}</td>
                   </tr>
                 )
               })}
