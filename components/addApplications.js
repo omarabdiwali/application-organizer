@@ -5,7 +5,7 @@ import { useState } from "react"
 export default function AddApplication({ func, button, className }) {
   const [title, setTitle] = useState("");
   const [url, setURL] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("Applied");
   const [disabled, setDisabled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -44,7 +44,7 @@ export default function AddApplication({ func, button, className }) {
   const closeModal = () => {
     setTitle("");
     setURL("");
-    setStatus("");
+    setStatus("Applied");
     setOpen(false);
     setDisabled(false);
   }
